@@ -1,19 +1,19 @@
 SELECT
-    r.resourceName AS resource,
-    e.eventType AS activity,
-    e.startAt,
-    e.endAt,
+    resource.resourceName AS resource,
+    event.eventType AS activity,
+    event.startAt,
+    event.endAt,
     COALESCE(p.projectCode, 'Operations') AS project,
-    COUNT(DISTINCT sa.personId) AS assigned_staff
-FROM event_resource er
-JOIN event e ON e.eventId = er.eventId
-JOIN resource r ON r.resourceId = er.resourceId
-LEFT JOIN experiment x ON x.experimentId = e.experimentId
-LEFT JOIN project p ON p.projectId = x.projectId
-LEFT JOIN staff_assignment sa ON sa.eventId = e.eventId
+    COUNT(DISTINCT staff_assignment.personId) AS assigned_staff
+FROM event_resource
+JOIN event ON event.eventId = event_resource.eventId
+JOIN resource ON resource.resourceId = event_resource.resourceId
+LEFT JOIN experiment ON experiment.experimentId = experiment.experimentId
+LEFT JOIN project ON project.projectId = experiment.projectId
+LEFT JOIN staff_assignment ON staff_assignment.eventId = event.eventId
 WHERE
-    e.eventStatus <> 'cancelled'
-    AND e.startAt <= :at
-    AND e.endAt > :at
-GROUP BY e.eventId, r.resourceId
-ORDER BY r.resourceId;
+    event.eventStatus <> 'cancelled'
+    AND event.startAt <= :at
+    AND event.endAt > :at
+GROUP BY event.eventId, resource.resourceId
+ORDER BY resource.resourceId;
