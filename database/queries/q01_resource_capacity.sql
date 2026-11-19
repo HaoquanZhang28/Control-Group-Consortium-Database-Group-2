@@ -1,39 +1,15 @@
-WITH
-    clipped AS (
-        SELECT
-            er.resourceId,
-            e.eventType,
-            MAX(
-                0,
-                (
-                    julianday(MIN(e.endAt, :end)) - julianday(MAX(e.startAt, :start))
-                ) * 24
-            ) AS hours
-        FROM event_resource er
-        JOIN event e ON e.eventId = er.eventId
-        WHERE
-            e.eventStatus <> 'cancelled'
-            AND e.startAt < :end
-            AND e.endAt > :start
-    ),
-    totals AS (
-        SELECT
-            resourceId,
-            SUM(CASE WHEN eventType = 'experiment' THEN hours ELSE 0 END) AS booked,
-            SUM(CASE WHEN eventType <> 'experiment' THEN hours ELSE 0 END) AS blocked
-        FROM clipped
-        GROUP BY resourceId
-    )
 SELECT
-    r.resourceName AS resource,
-    t.resourceTypeKind AS resource_kind,
-    ROUND(COALESCE(x.booked, 0), 2) AS booked_hours,
-    ROUND(COALESCE(x.blocked, 0), 2) AS blocked_hours,
-    ROUND(
-        (julianday(:end) - julianday(:start)) * 24 - COALESCE(x.blocked, 0),
-        2
-    ) AS available_hours
-FROM resource r
-JOIN resource_type t ON t.resourceTypeId = r.resourceTypeId
-LEFT JOIN totals x ON x.resourceId = r.resourceId
-ORDER BY booked_hours DESC, r.resourceId;
+    resource.resourceName AS resource,
+    resource_type.resourceTypeKind AS resource_kind,
+    ROUND(COALESCE(SUM(CASE WHEN event.eventType = 'experiment' THEN MAX(0,(strftime('%s', MIN(event.endAt, :end)) - strftime('%s', MAX(event.startAt, :start))) / 3600.0) ELSE 0 END), 0), 2) AS booked_hours,
+    ROUND(COALESCE(SUM(CASE WHEN event.eventType != 'experiment' THEN MAX(0, (strftime('%s', MIN(event.endAt, :end)) - strftime('%s', MAX(event.startAt, :start))) / 3600.0) ELSE 0 END), 0), 2) AS blocked_hours,
+    ROUND((strftime('%s', :end) - strftime('%s', :start)) / 3600.0 - COALESCE(SUM(CASE WHEN event.eventType <> 'experiment' THEN MAX(0, (strftime('%s', MIN(event.endAt, :end)) - strftime('%s', MAX(event.startAt, :start))) / 3600.0) ELSE 0 END), 0), 2) AS available_hours
+FROM resource
+JOIN resource_type ON resource_type.resourceTypeId = resource.resourceTypeId
+LEFT JOIN event_resource ON event_resource.resourceId = resource.resourceId
+LEFT JOIN event ON event.eventId = event_resource.eventId
+AND event.eventStatus != 'cancelled'
+AND event.startAt < :end
+AND event.endAt > :start
+GROUP BY resource.resourceId, resource.resourceName, resource_type.resourceTypeKind
+ORDER BY booked_hours DESC, resource.resourceId;
