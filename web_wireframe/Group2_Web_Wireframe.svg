@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <rect width="1200" height="720" fill="#ffffff"/>
+  <rect width="1200" height="72" fill="#000000"/>
+  <text x="50" y="44" fill="#ffffff" font-family="Arial" font-size="18" font-weight="700">CONTROL GROUP CONSORTIUM</text>
+  <g fill="#ffffff" font-family="Arial" font-size="13">
+    <text x="675" y="43">Overview</text>
+    <text x="750" y="43">Resources</text>
+    <text x="835" y="43">Research</text>
+    <text x="915" y="43">Staff &amp; Access</text>
+    <text x="1025" y="43">Costs &amp; Funding</text>
+  </g>
+  <line x1="674" y1="58" x2="731" y2="58" stroke="#ffffff" stroke-width="3"/>
+  <text x="60" y="136" fill="#000000" font-family="Arial" font-size="34" font-weight="700">Consortium Dashboard</text>
+  <g fill="#ffffff" stroke="#000000">
+    <rect x="60" y="172" width="256" height="92"/>
+    <rect x="335" y="172" width="256" height="92"/>
+    <rect x="610" y="172" width="256" height="92"/>
+    <rect x="884" y="172" width="256" height="92"/>
+  </g>
+  <g fill="#000000" font-family="Arial" font-size="13">
+    <text x="80" y="202">ACTIVE PROJECTS</text>
+    <text x="355" y="202">SCHEDULED EVENTS</text>
+    <text x="630" y="202">AVAILABLE RESOURCES</text>
+    <text x="904" y="202">STAFF ON ASSIGNMENT</text>
+  </g>
+  <g fill="#000000" font-family="Arial" font-size="28" font-weight="700">
+    <text x="80" y="244">--</text>
+    <text x="355" y="244">--</text>
+    <text x="630" y="244">--</text>
+    <text x="904" y="244">--</text>
+  </g>
+  <g fill="#ffffff" stroke="#000000">
+    <rect x="60" y="292" width="531" height="165"/>
+    <rect x="609" y="292" width="531" height="165"/>
+    <rect x="60" y="475" width="531" height="165"/>
+    <rect x="609" y="475" width="531" height="165"/>
+  </g>
+  <g fill="#000000" font-family="Arial">
+    <text x="88" y="334" font-size="23" font-weight="700">Resources</text>
+    <text x="88" y="370" font-size="15">Capacity, occupancy, and maintenance</text>
+    <line x1="88" y1="408" x2="562" y2="408" stroke="#000000"/>
+    <text x="88" y="434" font-size="14">Open Resources</text>
+    <text x="637" y="334" font-size="23" font-weight="700">Research</text>
+    <text x="637" y="370" font-size="15">Activity, requests, and collaboration</text>
+    <line x1="637" y1="408" x2="1111" y2="408" stroke="#000000"/>
+    <text x="637" y="434" font-size="14">Open Research</text>
+    <text x="88" y="517" font-size="23" font-weight="700">Staff &amp; Access</text>
+    <text x="88" y="553" font-size="15">Workload, qualifications, and access</text>
+    <line x1="88" y1="591" x2="562" y2="591" stroke="#000000"/>
+    <text x="88" y="617" font-size="14">Open Staff &amp; Access</text>
+    <text x="637" y="517" font-size="23" font-weight="700">Costs &amp; Funding</text>
+    <text x="637" y="553" font-size="15">Project costs, funding, and invoices</text>
+    <line x1="637" y1="591" x2="1111" y2="591" stroke="#000000"/>
+    <text x="637" y="617" font-size="14">Open Costs &amp; Funding</text>
+  </g>
+</svg>
